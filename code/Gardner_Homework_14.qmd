@@ -1,0 +1,14 @@
+---
+title: "Homework 14"
+author: "Kate Gardner"
+format: html
+editor: visual
+---
+
+Set Up
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(here)
+```
+
