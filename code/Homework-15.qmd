@@ -1,0 +1,143 @@
+---
+title: "Homework 15"
+author: "KG"
+format: html
+editor: visual
+---
+
+Normal set up code
+
+```{r}
+rm(list = ls())
+library(dplyr)
+library(ggplot2)
+library(tidyverse)
+library(here)
+comp <- read.csv(here("data", "compensation.csv"))
+comp$Grazing <- as.factor(comp$Grazing)
+```
+
+look at the structure of the data and get summary statistics
+
+```{r}
+glimpse(comp)
+summary(comp)
+```
+
+# Subsetting
+
+Using select()
+
+```{r}
+select(comp, Fruit) #grabs columns by telling R Studio the data set and column
+```
+
+```{r}
+#select() can also be used to pull all but one column
+select(comp, -Root) #pulls all but the roots column
+```
+
+Using slice()
+
+```{r}
+slice(comp, 2) #takes rows by telling R the data set and row to show
+```
+
+```{r}
+#or use : to pull a continuous subset of rows
+slice(comp, 2:10)
+```
+
+```{r}
+#Last, use slice() and c() to get a discontinuous subset
+slice(comp, c(2, 3, 10))
+```
+
+Using filter()
+
+```{r}
+#subsetting using boolean operators
+with(comp, Fruit > 80) #understand how interprets >, with() tells R to look in the data frame, do what comes next and then stop looking. Identifies where the Fruit value is >80 (true) and <80 (false)
+```
+
+```{r}
+#return the rows where it is TRUE that Fruit is >80
+filter(comp, Fruit > 80)
+```
+
+```{r}
+#select rows according to multiple conditions
+filter(comp, Fruit > 80 | Fruit < 20)
+```
+
+```{r}
+#use the assignment opperator to save the output
+lo_hi_fruit <- filter(comp, Fruit > 80 | Fruit < 20)
+lo_hi_fruit #look at the variable
+```
+
+# Transforming
+
+Using mutate()
+
+```{r}
+#look at compensation now
+head(comp)
+
+#use mutate() to add the column logFruit
+comp <- mutate(comp, logFruit = log(Fruit))
+head(comp) #look at the new comp dataframe
+```
+
+# Sorting
+
+Using arrange()
+
+```{r}
+arrange(comp, Fruit) #sort in order of lowest to highest fruit production
+```
+
+# Top Tips
+
+```{r}
+#return root width o ftrees with fruit production > 80
+select(filter(comp, Fruit > 80), Root)
+```
+
+```{r}
+#use piping to format commands 
+#Root values from fruit > 80 subset via piping
+comp %>%
+  filter(Fruit > 80) %>%
+  select(Root)
+```
+
+# Summary Statistics
+
+Nested, no pipe
+
+```{r}
+summarise(
+  group_by(comp, Grazing),
+  meanFruit = mean(Fruit)
+)
+```
+
+Pipe, no nesting
+
+```{r}
+comp%>% 
+  group_by(Grazing) %>%
+  summarise(meanFruit = mean(Fruit))
+```
+
+```{r}
+comp %>% 
+  group_by(Grazing) %>%
+  summarise(
+    meanFruit = mean(Fruit), sdFruit = sd(Fruit))
+```
+
+Done!
+
+more edits
