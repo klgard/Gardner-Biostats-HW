@@ -4,3 +4,69 @@ format: html
 editor: visual
 ---
 
+Normal set up. Add code to clear R's brain and load in the tidyverse and here packages
+```{r}
+rm(list = ls())
+library(tidyverse)
+library(here)
+```
+
+Read in donnerville percent cover .csv
+```{r}
+cover <- read.csv(here("data", "donnerville_percent_cover.csv"))
+```
+
+Examine the data
+```{r}
+glimpse(cover)
+str(cover)
+```
+
+Turn site, plot type, and cover_type into factor variables
+```{r}
+cover$Site <- as.factor(cover$Site)
+cover$Plot.type <- as.factor(cover$Plot.type)
+cover$cover_type <- as.factor(cover$cover_type)
+levels(cover$Site)
+levels(cover$Plot.type)
+levels(cover$cover_type)
+```
+
+Fix the site and cover_type variables
+```{r}
+fix1 <- which(cover$Site %in% c("DONNERVILLE - 1","donnerville 1","Donnerville 1"))
+cover$Site[fix1] <- "donnerville 1"
+cover$Site <- factor(cover$Site)
+```
+
+```{r}
+fix2 <- which(cover$Site %in% c("donnerville 2", "Donnerville 2"))
+cover$Site[fix2] <- "donnerville 2"
+cover$Site <- factor(cover$Site)
+```
+
+```{r}
+fix3<- which(cover$Site %in% c("Donnerville 3", "donnerville-3"))
+cover$Site[fix3] <- "Donnerville 3"
+cover$Site <- factor(cover$Site)
+```
+
+```{r}
+fix4 <- which(cover$cover_type %in% c("bare", "Bare"))
+cover$cover_type[fix4] <- "Bare"
+cover$cover_type <- factor(cover$cover_type)
+```
+
+```{r}
+fix5 <- which(cover$cover_type %in% c("bryophtes", "Bryophytes"))
+cover$cover_type[fix4] <- "Bryophytes"
+cover$cover_type <- factor(cover$cover_type)
+```
+
+```{r}
+fix6 <- which(cover$cover_type %in% c("vasc", "Vascular"))
+cover$cover_type[fix4] <- "Vascular"
+cover$cover_type <- factor(cover$cover_type)
+```
+
+
