@@ -69,4 +69,18 @@ cover$cover_type[fix4] <- "Vascular"
 cover$cover_type <- factor(cover$cover_type)
 ```
 
+Turn Date into a date variable in R
+```{r}
+cover$Date <- dmy(cover$Date)
+```
+
+Determine average percent cover by type
+```{r}
+
+```
+
+Determine average percent vascular plant cover across all sites 
+```{r}
+
+```
 
