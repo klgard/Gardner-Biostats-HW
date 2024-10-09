@@ -59,13 +59,13 @@ cover$cover_type <- factor(cover$cover_type)
 
 ```{r}
 fix5 <- which(cover$cover_type %in% c("bryophtes", "Bryophytes"))
-cover$cover_type[fix4] <- "Bryophytes"
+cover$cover_type[fix5] <- "Bryophytes"
 cover$cover_type <- factor(cover$cover_type)
 ```
 
 ```{r}
-fix6 <- which(cover$cover_type %in% c("vasc", "Vascular"))
-cover$cover_type[fix4] <- "Vascular"
+fix6 <- which(cover$cover_type %in% c("vasc ", "Vascular"))
+cover$cover_type[fix6] <- "Vascular"
 cover$cover_type <- factor(cover$cover_type)
 ```
 
