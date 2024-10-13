@@ -1,0 +1,125 @@
+---
+title: "Homework 18"
+format: html
+editor: visual
+---
+
+Normal Set up
+
+```{r}
+rm(list = ls())
+library(tidyverse)
+library(here)
+```
+
+Read in compensation.csv
+
+```{r}
+comp <- read.csv(here("data", "compensation.csv"))
+```
+
+## Scatter plots ##
+
+Create a simple bivariate scatter plot of the data
+
+```{r}
+ggplot(comp, aes(x = Root, y = Fruit)) + 
+  geom_point()
+# tell it the data frame you want, then aes() defines the graphs features and then add a geometric layer as the points
+```
+
+Get rid of the grey background
+
+```{r}
+ggplot(comp, aes(x=Root, y=Fruit)) + 
+  geom_point() + 
+  theme_bw() #black and white theme
+```
+
+Increase point size
+
+```{r}
+ggplot(comp, aes(x=Root, y=Fruit)) + 
+  geom_point(size = 5) + # make point size 5
+  theme_bw()
+```
+
+Add axis labels
+
+```{r}
+ggplot(comp, aes(x=Root, y=Fruit)) + 
+  geom_point() + 
+  xlab("Root Biomass") + #x-axis label 
+  ylab("Fruit Production") + #y-axis label
+  theme_bw()
+```
+
+Adjust the color of the points to match levels in a group
+```{r}
+ggplot(comp, aes(x=Root, y=Fruit, color = Grazing)) + #change color based on grazing
+  geom_point(size = 5) + 
+  xlab("Root Biomass") +
+  ylab("Fruit Production") + 
+  theme_bw()
+```
+
+Change the shape to match levels in a group
+
+```{r}
+ggplot(comp, aes(x=Root, y=Fruit, shape = Grazing)) + #change shape based on grazing
+  geom_point() + 
+  xlab("Root Biomass") +
+  ylab("Fruit Production") + 
+  theme_bw()
+```
+
+## Box and Whisker Plots
+
+Basic box and whisker plot
+```{r}
+ggplot(comp, aes(x=Grazing, y=Fruit)) + 
+  geom_boxplot() + 
+  xlab("Grazing Treatment") +
+  ylab("Fruit Production") + 
+  theme_bw()
+```
+
+Add a layer for the raw data
+```{r}
+ggplot(comp, aes(x=Grazing, y=Fruit)) + 
+  geom_boxplot() +
+  geom_point(size = 4, color = 'lightgrey', alpha = 0.5 ) + # adds points to the plot
+  xlab("Grazing Treatment") +
+  ylab("Fruit Production") + 
+  theme_bw()
+```
+
+## Histograms
+
+basic histogram of fruit production
+```{r}
+ggplot(comp, aes(x=Fruit)) +
+  geom_histogram()
+#makes an ugly plot
+```
+
+Change the binwidth
+```{r}
+ggplot(comp, aes(x = Fruit)) + 
+  geom_histogram(bins = 10) #change the number of bins
+ggplot(comp, aes(x = Fruit)) + 
+  geom_histogram(binwidth = 15) # change the binwidth (how wide the bars are)
+```
+
+Separate histograms by levels in a group
+```{r}
+ggplot(comp, aes(x = Fruit)) + 
+  geom_histogram(binwidth = 15) + 
+  facet_wrap(~Grazing) # function to separate
+```
+
+Save the plot as a .png
+```{r}
+ggsave("ThatCoolHistogramOfFruit.png")
+```
+
