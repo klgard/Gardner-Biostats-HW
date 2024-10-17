@@ -1,0 +1,27 @@
+---
+title: "Homework feedback"
+format: html
+editor: visual
+---
+
+## Homework feedback
+
+## Homework 15
+
+Looks good, but I strongly encourage you to think about what information should go as "commentary" about your scientific thinking outside of code chunks vs. what should count as comments regarding your code in which case the comments should go inside of code chunks. I will be looking for a bit more of the former.
+
+## Homework 16
+
+I see that you don't have code for what might be the 2 most important parts of the homework:
+
+-   Determine average percent cover by type
+
+-   Determine average percent vascular plant cover across all sites.
+
+I'm not sure if you ran out of time, or weren't sure how to do it (nothing is written in the code) but make sure you can write the code that answers those questions. Fundamental to what comes next.
+
+Because those weren't attempted and there was no explanation, I'm just giving you 1 pt on this homework.
+
+## Homework 18
+
+Looks good!
