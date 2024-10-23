@@ -18,7 +18,7 @@ Read in compensation.csv
 comp <- read.csv(here("data", "compensation.csv"))
 ```
 
-## Scatter plots ##
+## Scatter plots
 
 Create a simple bivariate scatter plot of the data
 
@@ -55,6 +55,7 @@ ggplot(comp, aes(x=Root, y=Fruit)) +
 ```
 
 Adjust the color of the points to match levels in a group
+
 ```{r}
 ggplot(comp, aes(x=Root, y=Fruit, color = Grazing)) + #change color based on grazing
   geom_point(size = 5) + 
@@ -76,6 +77,7 @@ ggplot(comp, aes(x=Root, y=Fruit, shape = Grazing)) + #change shape based on gra
 ## Box and Whisker Plots
 
 Basic box and whisker plot
+
 ```{r}
 ggplot(comp, aes(x=Grazing, y=Fruit)) + 
   geom_boxplot() + 
@@ -85,6 +87,7 @@ ggplot(comp, aes(x=Grazing, y=Fruit)) +
 ```
 
 Add a layer for the raw data
+
 ```{r}
 ggplot(comp, aes(x=Grazing, y=Fruit)) + 
   geom_boxplot() +
@@ -97,6 +100,7 @@ ggplot(comp, aes(x=Grazing, y=Fruit)) +
 ## Histograms
 
 basic histogram of fruit production
+
 ```{r}
 ggplot(comp, aes(x=Fruit)) +
   geom_histogram()
@@ -104,6 +108,7 @@ ggplot(comp, aes(x=Fruit)) +
 ```
 
 Change the binwidth
+
 ```{r}
 ggplot(comp, aes(x = Fruit)) + 
   geom_histogram(bins = 10) #change the number of bins
@@ -112,6 +117,7 @@ ggplot(comp, aes(x = Fruit)) +
 ```
 
 Separate histograms by levels in a group
+
 ```{r}
 ggplot(comp, aes(x = Fruit)) + 
   geom_histogram(binwidth = 15) + 
@@ -119,7 +125,7 @@ ggplot(comp, aes(x = Fruit)) +
 ```
 
 Save the plot as a .png
+
 ```{r}
 ggsave("ThatCoolHistogramOfFruit.png")
 ```
-
