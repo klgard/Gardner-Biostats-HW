@@ -71,6 +71,12 @@ Based on what you see in the box plot, write out your answers the following ques
 
 -   how would you describe the pattern of SOM between the 4 different forests?
 
+    I would say that the Kip tract has the most variability and the highest average SOM. Then Donnerville and South Hammond are pretty similar and Degrasse is has the lowest SOM.
+
 -   What do you notice that is different from how the data were displayed in the bar plot?
 
+    The box plot includes the maximum and the minimum values for each forest type, and shows a bit that Donnerville has a bit of a higher mean than South Hammond.
+
 -   Which plot type is more informative? Explain your answer.
+
+    The box plot is more informative because it includes more information like the minimum and maximum as well as the interquartile range values to show the distribution and variance of the data better.
