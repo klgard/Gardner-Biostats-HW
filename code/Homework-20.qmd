@@ -31,9 +31,18 @@ ggplot(soil, aes(x=SOM_percent)) +
 
 How would you describe the mean_SOM data based on viewing the histogram? Write your answer below:
 
-Skewed left
+Skewed right
 
 4.  Create a new dataframe called SOM by calculating for each forest the mean soil organic matter and the standard deviation of soil organic matter. Make sure to name variables you create "mean_SOM" and "sd_SOM" so that the next code chunk I give you works.
+
+Summarize N
+
+```{r}
+nit <- soil |>
+  group_by(Forest) |> 
+  summarize(mean_nit = mean(Nitrate_N_ppm, na.rm = T),
+            sd_nit = sd(Nitrate_N_ppm, na.rm = T))
+```
 
 ```{r}
 SOM <- soil |>
@@ -60,7 +69,7 @@ Now create a boxplot of the SOM_percent data. Use Forest as the x-axis variable 
 
 ```{r}
 ggplot(soil, aes(x = Forest, y = SOM_percent)) + 
-  geom_boxplot() + 
+  geom_boxplot(outlier.color = "red") + 
   geom_point(size = 4, color = "blue", alpha = 0.5) + 
   ylab("Percent soil organic matter") + 
   xlab("Forest name")
