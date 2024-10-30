@@ -1,0 +1,77 @@
+---
+title: "Homework 23"
+format: html
+editor: visual
+---
+
+## Linear models
+
+Normal set up and read in data
+
+```{r}
+rm(list = ls())
+library(tidyverse)
+library(here)
+
+plant_gr <- read.csv(here("data", "plant.growth.rate.csv"))
+```
+
+View the data
+
+```{r}
+glimpse(plant_gr)
+```
+
+Make a scatter plot
+
+```{r}
+ggplot(plant_gr, aes(x=soil.moisture.content, y=plant.growth.rate))+
+  geom_point()+
+  ylab("Plant Growth Rate (mm/week)")+
+  theme_bw()
+```
+
+Fit linear model using `lm()`
+
+```{r}
+model_pgr <- lm(plant.growth.rate ~ soil.moisture.content, 
+                data=plant_gr)
+# prediciting that plant growth is a function of soil moisture
+```
+
+Install and load the package `ggfortify`
+
+```{r}
+install.packages("ggfortify")
+
+library(ggfortify)
+```
+
+Use `autoplot()` to make four scatter plots with the plant growth linear model
+
+```{r}
+autoplot(model_pgr, smooth.colour = NA) 
+# smooth.color = NA removes line fitted by locally weighted regression
+```
+
+Make an anova table with sum of squares
+
+```{r}
+anova(model_pgr)
+```
+
+make a summary table to get intercept and slope
+
+```{r}
+summary(model_pgr)
+```
+
+Make plot with regression line
+
+```{r}
+ggplot(plant_gr, aes(x = soil.moisture.content, y = plant.growth.rate)) +
+  geom_point()+
+  geom_smooth(method = 'lm') + #adds linear regression line with standard error
+  ylab("Plant Growth Rate (mm/week)") +
+  theme_bw()
+```

@@ -44,6 +44,7 @@ ggplot(totals, aes(x = Habitat, y = total.number, fill = colour)) +
 ```
 
 Use the xtabs() function to transform the data into a matrix for the chi squared test
+
 ```{r}
 lady.mat <- xtabs(number ~ Habitat + colour, data = lady)
 
@@ -51,10 +52,13 @@ lady.mat
 ```
 
 Do the actual chi squared test
+
 ```{r}
 chisq.test(lady.mat)
 ```
+
 Assign a name to the chi squared test to see the Yates' comtinuity correction
+
 ```{r}
 lady.chi <- chisq.test(lady.mat)
 names(lady.chi)
@@ -65,10 +69,13 @@ lady.chi$expected
 ## Two Sample T-test
 
 look at the ozone data
+
 ```{r}
 glimpse(ozone)
 ```
+
 Make a hsitogram
+
 ```{r}
 ggplot(ozone, aes(x = Ozone)) + 
   geom_histogram(binwidth = 10) + 
@@ -77,12 +84,13 @@ ggplot(ozone, aes(x = Ozone)) +
 ```
 
 do the t-test
+
 ```{r}
 t.test(Ozone ~ Garden.location, data = ozone)
 ```
 
 Var.test has the same structure as the t-test
+
 ```{r}
 var.test(Ozone ~ Garden.location, data = ozone)
 ```
-
