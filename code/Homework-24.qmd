@@ -1,0 +1,107 @@
+---
+title: "Homework 24"
+format: html
+editor: visual
+---
+
+## Overview
+
+For your homework you will implement a data analysis using a dataset on crab growth measurements.
+
+Set things up (hint: there is a new package to add with `library()`)
+
+```{r}
+rm(list = ls())
+library(tidyverse)
+library(here)
+library(ggfortify)
+```
+
+## The data
+
+Let's pull in some data appropriate biologists: crab measurements. This dataset includes measurements of farmed crabs.
+
+```{r}
+crabs <- read.csv(here("data", "CrabAgePrediction.csv"))
+glimpse(crabs)
+```
+
+One of the variables is categorical - let's fix that in the data.
+
+```{r}
+crabs$Sex <- as.factor(crabs$Sex)
+levels(crabs$Sex)
+```
+
+## Question
+
+Is there a relationship between height and weight in female crabs?
+
+1.  Extract the data for just female crabs.
+
+```{r}
+females <- crabs |> 
+  filter(Sex == "F", Height < 2, Height > 0.1) # Without outliers
+
+females_out <- crabs |> 
+  filter(Sex == "F")
+```
+
+2.  Examine the response and predictor variables and use the flow chart from class to decide the appropriate statistical analysis (choose from: chi-square, 2-sample t-test or linear regression). Explain your answer here: Doing a regression because predictor variable is continuous and we are testing for a relationship between the predictor and response variables.
+3.  Work through the data analysis **following all of the steps provided in chapter 5 of your book**. You may use class notes or homework keys as a guide.
+
+Step 1: make a scatter plot
+
+```{r}
+#Without outliers
+ggplot(females, aes(x = Height, y = Weight)) +
+  geom_point() + 
+  theme_bw()
+#Looks like there is a strong positive linear relationship between height and weight
+
+#with outliers 
+ggplot(females_out, aes(x = Height, y = Weight)) +
+  geom_point() + 
+  theme_bw()
+```
+
+Step 2: Fit a linear model
+
+```{r}
+#Without outliers
+crab_model <- lm(Weight ~ Height, data = females)
+
+#With outliers
+crab_model_out <- lm(Weight ~ Height, data = females_out)
+```
+
+Step 3: Check assumptions
+
+```{r}
+#Without outliers
+autoplot(crab_model, smooth.colour = NA)
+
+
+#with outliers
+autoplot(crab_model_out, smooth.colour = NA)
+#looks weird
+```
+
+Step 4: get ANOVA table for sum of squares
+
+```{r}
+# outliers removed
+anova(crab_model)
+
+# Has outliers
+anova(crab_model_out)
+```
+
+Make a summary table
+
+```{r}
+summary(crab_model) # no outliers
+summary(crab_model_out) # outliers
+```
+
+The P-value is 2.2X10\^-16 which indicates that height is a statistically significant predictor of the height of crabs, whether or not the outliers are included.
