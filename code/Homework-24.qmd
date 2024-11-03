@@ -47,7 +47,7 @@ females_out <- crabs |>
   filter(Sex == "F")
 ```
 
-2.  Examine the response and predictor variables and use the flow chart from class to decide the appropriate statistical analysis (choose from: chi-square, 2-sample t-test or linear regression). Explain your answer here: Doing a regression because predictor variable is continuous and we are testing for a relationship between the predictor and response variables.
+2.  Examine the response and predictor variables and use the flow chart from class to decide the appropriate statistical analysis (choose from: chi-square, 2-sample t-test or linear regression). Explain your answer here: Doing a regression because predictor and response variables are continuous and we are testing for a relationship between the predictor and response variables.
 3.  Work through the data analysis **following all of the steps provided in chapter 5 of your book**. You may use class notes or homework keys as a guide.
 
 Step 1: make a scatter plot
@@ -64,6 +64,8 @@ ggplot(females_out, aes(x = Height, y = Weight)) +
   geom_point() + 
   theme_bw()
 ```
+
+estimate slope and intercept from figure
 
 Step 2: Fit a linear model
 
@@ -87,6 +89,14 @@ autoplot(crab_model_out, smooth.colour = NA)
 #looks weird
 ```
 
+Data normally distributed (Normal QQ)
+
+Equal variance (scale-location)
+
+good linear fit (residuals vs fitted)
+
+influence of outliers (residuals vs leverage)
+
 Step 4: get ANOVA table for sum of squares
 
 ```{r}
@@ -104,4 +114,4 @@ summary(crab_model) # no outliers
 summary(crab_model_out) # outliers
 ```
 
-The P-value is 2.2X10\^-16 which indicates that height is a statistically significant predictor of the height of crabs, whether or not the outliers are included.
+The P-value is 2.2X10\^-16 which indicates that height is a statistically significant predictor of the height of crabs, whether or not the outliers are included. Slope is significantly different from 0

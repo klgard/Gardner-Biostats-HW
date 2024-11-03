@@ -1,0 +1,85 @@
+---
+title: "Homework 25"
+format: html
+editor: visual
+---
+
+## One-way ANOVA
+
+Normal Set Up
+
+```{r}
+rm(list = ls())
+library(tidyverse)
+library(here)
+library(ggfortify)
+```
+
+Read in data
+
+```{r}
+daphnia <- read.csv(here("data", "Daphniagrowth.csv"))
+```
+
+look at the data
+
+```{r}
+glimpse(daphnia)
+```
+
+Make parasite a factor variable
+
+```{r}
+daphnia$parasite <- as.factor(daphnia$parasite)
+levels(daphnia$parasite)
+```
+
+Make a box plot
+
+```{r}
+ggplot(daphnia, aes(x = parasite, y = growth.rate)) +
+  geom_boxplot() +
+  theme_bw()
+```
+
+Flip the axis
+
+```{r}
+ggplot(daphnia, aes(x = parasite, y = growth.rate)) +
+  geom_boxplot() +
+  theme_bw() +
+  coord_flip()
+```
+
+Make a linear model
+
+```{r}
+model_growth <- lm(growth.rate ~ parasite, data = daphnia)
+```
+
+Check assumptions
+
+```{r}
+autoplot(model_growth, smooth.colour = NA)
+```
+
+Make an ANOVA table
+
+```{r}
+anova(model_growth)
+```
+
+Make a summary table
+
+```{r}
+summary(model_growth)
+```
+
+Get means for growth rates
+
+```{r}
+sumDat <- daphnia |>
+  group_by(parasite) |>
+  summarise(meanGR = mean(growth.rate)) |>
+  View()
+```
