@@ -1,0 +1,79 @@
+---
+title: "Homework 26"
+format: html
+editor: visual
+---
+
+**Normal Set Up**
+
+```{r}
+rm(list = ls())
+library(tidyverse)
+library(here)
+library(ggfortify)
+library(multcomp)
+```
+
+**Read in the data**
+
+```{r}
+peas <- read.csv(here("data", "s_r_pea_sections.csv"))
+```
+
+**Make `Treatment` a factor variable**
+
+```{r}
+peas$Treatment <- as.factor(peas$Treatment)
+levels(peas$Treatment)
+```
+
+**Plot and estimate results**
+
+```{r}
+ggplot(peas, aes(x = Treatment, y = pea_section_length_ou)) +
+  geom_boxplot()+
+  theme_bw()
+```
+
+I would expect to find that there is a difference between the control group and the treatment groups, as well as a difference between the 2% sucrose group and the other groups, but no difference between the other treatment groups.
+
+**Build the model**
+
+```{r}
+pea_model <- lm(pea_section_length_ou ~ Treatment, data = peas)
+```
+
+**Check Assumptions**
+
+```{r}
+autoplot(pea_model, smooth.colour = NA)
+```
+
+Looks fine
+
+**Make ANOVA and Summary tables**
+
+```{r}
+anova(pea_model)
+```
+
+```{r}
+summary(pea_model)
+```
+
+Looks like there is a significant difference between the treatment groups and the control group, but which ones are different from each other?
+
+**Conduct Tukey HSD**
+
+```{r}
+phc1 <- glht(pea_model, linfct = mcp(Treatment = "Tukey"))
+summary(phc1)
+```
+
+**Do the compact letter display**
+
+```{r}
+cld(phc1)
+```
+
+There is a significant difference between the control group and the rest of the treatment groups, and between the 2% sucrose group and all of the other groups. There is no significant difference between 1% fructose 1% glucose, 2% fructose, and 2% glucose.
