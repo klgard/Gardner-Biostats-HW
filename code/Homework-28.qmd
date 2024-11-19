@@ -1,0 +1,143 @@
+---
+title: "Homework 28"
+format: html
+editor: visual
+---
+
+# Homework 28: Pimping Your Plots
+
+Normal code set up:
+
+```{r}
+rm(list = ls())
+library(tidyverse)
+library(here)
+library(gridExtra)
+```
+
+Read in the Data
+
+```{r}
+comp <- read.csv(here("data", "compensation.csv"))
+```
+
+## Preparation 
+
+Make a scatterplot and a box plot and assign them to an object for future use
+
+```{r}
+eg_scatter <- ggplot(data = comp, aes(x = Root, y = Fruit)) + 
+  geom_point()
+
+eg_box <- ggplot(data = comp, aes(x = Grazing, y = Fruit)) + 
+  geom_boxplot()
+```
+
+Use the saved figures and add `theme_bw()` to the scatterplot
+
+```{r}
+eg_scatter + theme_bw()
+```
+
+Use `grid.arrange()` to put the scatter plot and box plot on the same page
+
+```{r}
+grid.arrange(eg_box, eg_scatter, nrow = 1)
+```
+
+## Axis Labels, Limits and Annotations
+
+Change the labels on the scatter plot
+
+```{r}
+eg_scatter + 
+  xlab("Root Biomass") + 
+  ylab("Fruit Production") + 
+  ggtitle("My SUPERB Title") # Way to add a title, although when would you really need one?
+
+# Combine all of the labels under the labs() function
+eg_scatter + labs( x = "Root Biomass", y = "Fruit Production", title = "My useless Title")
+```
+
+Change the range on the x and y-axis
+
+```{r}
+eg_scatter + 
+  xlim(0,20) + 
+  ylim(0,140)
+```
+
+Put custom text inside the figure
+
+```{r}
+eg_scatter + 
+  annotate("text", x = c(6,8), y = c(105,25), label = c("text up here ...", "... and text down here"))
+```
+
+## Scales
+
+Adjust range using the `limit =` argument
+
+```{r}
+eg_scatter + 
+  scale_x_continuous(limits = c(4,11), breaks = c(4:11))
+```
+
+Now use `scale()` to customize the colors
+
+```{r}
+ggplot(data = comp, aes(x = Root, y = Fruit, color = Grazing)) + 
+  geom_point() + 
+  scale_color_manual(values = c(Grazed = "brown", Ungrazed = "darkgreen"))
+```
+
+Change the y-axis scale to a log scale
+
+```{r}
+eg_box + 
+  scale_y_continuous(breaks = seq(from = 10, to = 150, by = 20), trans = "log10")
+```
+
+## Customize the Theme
+
+```{r}
+eg_scatter + 
+  theme(
+    panel.background = element_rect(fill = NA, color = "black"), # white background, black border
+    panel.grid.minor = element_blank(), # no minor grid lines
+    panel.grid.major = element_line(color = "lightblue") #add major grid lines and change color
+  )
+```
+
+Manipulate the color, position, and size of axis title
+
+```{r}
+eg_box + 
+  theme(
+    axis.title.x = element_text(color = "cornflowerblue", 
+                                size = rel(2)), 
+    axis.text.x = element_text(angle = 45, size = 13, vjust = 0.5))
+```
+
+Change the names of the levels on the graph
+
+```{r}
+eg_box + 
+  scale_x_discrete(limits = c("Ungrazed", "Grazed"), labels = c("Control", "Grazed"))
+```
+
+Customizing legend/key
+
+```{r}
+ggplot(comp, aes(x = Root, y = Fruit, color = Grazing)) + 
+  geom_point() + 
+  theme(legend.key = element_rect(fill = NA))
+```
+
+Get rid of the legend
+
+```{r}
+ggplot(comp, aes(x = Root, y = Fruit, color = Grazing)) + 
+  geom_point() +
+  theme(legend.position = "none")
+```

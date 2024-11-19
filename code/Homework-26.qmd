@@ -32,7 +32,9 @@ levels(peas$Treatment)
 ```{r}
 ggplot(peas, aes(x = Treatment, y = pea_section_length_ou)) +
   geom_boxplot()+
+  geom_point() +
   theme_bw()
+
 ```
 
 I would expect to find that there is a difference between the control group and the treatment groups, as well as a difference between the 2% sucrose group and the other groups, but no difference between the other treatment groups.
@@ -61,7 +63,7 @@ anova(pea_model)
 summary(pea_model)
 ```
 
-Looks like there is a significant difference between the treatment groups and the control group, but which ones are different from each other?
+Looks like there is a significant difference between the treatment groups and the control group, but which ones are different from each other? F 4, 45 = 49.368, p \< 0.01
 
 **Conduct Tukey HSD**
 
